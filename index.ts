@@ -1,15 +1,19 @@
 import Server from "./classes/server";
 import userRoutes from "./routes/usuario";
-import mongoose, { ConnectOptions } from "mongoose";
-import { MongoClient } from 'mongodb';
+import mongoose from "mongoose";
 import bodyParser from "body-parser";
+import postRoutes from "./routes/post";
+import fileUpload from "express-fileupload";
 const server = new Server();
 
 server.app.use(bodyParser.urlencoded({extended: true}));
 server.app.use(bodyParser.json());
 
+server.app.use(fileUpload({useTempFiles:true}));
 
 server.app.use('/user', userRoutes);
+server.app.use('/post', postRoutes);
+
 /*
 mongoose.connect('mongodb://localhost:27017/fotosgram',
                  {useNewUrlParser: true, useCreateIndex: true} as ConnectOptions ).then((res)=>{
